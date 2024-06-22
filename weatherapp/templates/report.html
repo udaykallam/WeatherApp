@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Report for {{ city }}</title>
+     <link rel="icon" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <style>
+        body {
+            background-size: 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+                background-image: url("{% static 'images/background.jpg' %}");
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            color: #fff;
+        }
+        h1 {
+            font-size: 5.0rem;
+            color: white;
+            text-align: center;
+
+            font-weight: 700;
+        }
+        h3 {
+            font-size: 2.5rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.5rem;
+        }
+        .weather-info {
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+        .weather-info-row {
+            display: flex;
+            justify-content: space-around;
+        }
+        .weather-icon {
+            width: 100px;
+            height: 100px;
+            vertical-align: middle;
+        }
+        .forecast-list {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+        .forecast-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        .forecast-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        .forecast-item .date {
+            flex: 1;
+            font-weight: bold;
+        }
+        .forecast-item span {
+            flex: 1;
+            text-align: center;
+        }
+        .panel {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .button {
+            background-color: #003B2B;
+            color: #FFFAFF;
+        }
+        button:hover {
+            color: #B0CF00;
+        }
+        .icon {
+            margin-right: 5px;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            color: white;
+            font-size: 0.9em;
+        }
+        img {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<h1>Weather Forecast for <span style="color:black">{{ city }}</span></h1>
+
+<div class="container">
+    <center>
+        <img src="http://openweathermap.org/img/wn/{{ weather_icon }}@2x.png" alt="{{ weather_condition }}" class="weather-icon">
+    </center>
+    <div class="weather-info-row">
+        <div class="weather-info">
+            <p><strong>Current Weather:</strong> {{ weather_condition }}</p>
+            <p><strong>Temperature:</strong> {{ temp_celsius }}</p>
+        </div>
+        <div class="weather-info">
+            <p><strong>Pressure:</strong> {{ pressure }}</p>
+            <p><strong>Humidity:</strong> {{ humidity }}</p>
+        </div>
+    </div>
+    <div class="weather-info-row">
+        <div class="weather-info">
+            <p><strong>Sunrise:</strong> {{ sunrise_time }}</p>
+        </div>
+        <div class="weather-info">
+            <p><strong>Sunset:</strong> {{ sunset_time }}</p>
+        </div>
+    </div>
+    <div class="weather-info-row">
+        <div class="weather-info">
+            <p><strong><i class="fas fa-clock icon"></i> Local Time:</strong> {{ local_time }}</p>
+        </div>
+    </div>
+    <h3>Forecast for the next 4 days</h3>
+    <ul class="forecast-list">
+        {% for forecast in forecast_list %}
+            <li class="forecast-item">
+                <span class="date">{{ forecast.date }}</span>
+                <img src="http://openweathermap.org/img/wn/{{ forecast.weather_icon }}@2x.png" alt="{{ forecast.weather_condition }}" class="weather-icon">
+                <span>{{ forecast.weather_condition }}</span>
+                <span>Min: {{ forecast.temp_min }} °C</span>
+                <span>Max: {{ forecast.temp_max }} °C</span>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="panel">
+    <a class="button" href="{% url 'home' %}" style="color:white">Search for other location</a>
+</div>
+<div class="copyright">
+    <p>&copy; Copyright <span id="year"></span> by UdayKallam</p>
+</div>
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+</body>
+</html>

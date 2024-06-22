@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Forecast</title>
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
+    <style>
+        html {
+            font-family: gill sans,sans-serif;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        html {
+            font-size: 62.5%;
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
+            background-image: url("{% static 'images/background.jpg' %}");
+            background-size: 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            font-size: 1.5em;
+            line-height: 1.6;
+            font-weight: 400;
+            margin: 0;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        @media (min-width: 550px) {
+            h1 {
+                font-size: 5.0rem;
+            }
+            h2 {
+                font-size: 4.2rem;
+            }
+            h3 {
+                font-size: 3.6rem;
+            }
+            h4 {
+                font-size: 3.0rem;
+            }
+            h5 {
+                font-size: 2.4rem;
+            }
+            h6 {
+                font-size: 1.5rem;
+            }
+        }
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        .column,
+        .columns {
+            width: 100%;
+            float: left;
+            box-sizing: border-box;
+        }
+        @media (min-width: 400px) {
+            .container {
+                width: 85%;
+                padding: 0;
+            }
+        }
+        @media (min-width: 550px) {
+            .container {
+                width: 95%;
+            }
+            .column,
+            .columns {
+                margin-left: 4%;
+            }
+            .column:first-child,
+            .columns:first-child {
+                margin-left: 0;
+            }
+            .one.column,
+            .one.columns {
+                width: 4.66667%;
+            }
+            .two.columns {
+                width: 13.33333%;
+            }
+            .three.columns {
+                width: 22%;
+            }
+            .four.columns {
+                width: 30.66667%;
+            }
+            .five.columns {
+                width: 39.33333%;
+            }
+            .six.columns {
+                width: 48%;
+            }
+            .seven.columns {
+                width: 56.66667%;
+            }
+            .eight.columns {
+                width: 65.33333%;
+            }
+            .nine.columns {
+                width: 74%;
+            }
+            .ten.columns {
+                width: 82.66667%;
+            }
+            .eleven.columns {
+                width: 91.33333%;
+            }
+            .twelve.columns {
+                width: 100%;
+                margin-left: 0;
+            }
+            .one-third.column {
+                width: 30.66667%;
+            }
+            .two-thirds.column {
+                width: 65.33333%;
+            }
+            .one-half.column {
+                width: 48%;
+            }
+            .offset-by-one.column,
+            .offset-by-one.columns {
+                margin-left: 8.66667%;
+            }
+            .offset-by-two.column,
+            .offset-by-two.columns {
+                margin-left: 17.33333%;
+            }
+            .offset-by-three.column,
+            .offset-by-three.columns {
+                margin-left: 26%;
+            }
+            .offset-by-four.column,
+            .offset-by-four.columns {
+                margin-left: 34.66667%;
+            }
+            .offset-by-five.column,
+            .offset-by-five.columns {
+                margin-left: 43.33333%;
+            }
+            .offset-by-six.column,
+            .offset-by-six.columns {
+                margin-left: 52%;
+            }
+            .offset-by-seven.column,
+            .offset-by-seven.columns {
+                margin-left: 60.66667%;
+            }
+            .offset-by-eight.column,
+            .offset-by-eight.columns {
+                margin-left: 69.33333%;
+            }
+            .offset-by-nine.column,
+            .offset-by-nine.columns {
+                margin-left: 78%;
+            }
+            .offset-by-ten.column,
+            .offset-by-ten.columns {
+                margin-left: 86.66667%;
+            }
+            .offset-by-eleven.column,
+            .offset-by-eleven.columns {
+                margin-left: 95.33333%;
+            }
+            .offset-by-one-third.column,
+            .offset-by-one-third.columns {
+                margin-left: 34.66667%;
+            }
+            .offset-by-two-thirds.column,
+            .offset-by-two-thirds.columns {
+                margin-left: 69.33333%;
+            }
+            .offset-by-one-half.column,
+            .offset-by-one-half.column {
+                margin-left: 52%;
+            }
+        }
+        .container:after,
+        .row:after,
+        .u-cf {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .button,
+        button {
+            display: inline-block;
+            height: 38px;
+            padding: 0 30px;
+            color: #555555;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 38px;
+            letter-spacing: .1rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            white-space: nowrap;
+            background-color: transparent;
+            border-radius: 4px;
+            border: 1px solid #bbb;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        input[type="submit"]:focus, input[type="reset"]:focus, input[type="button"]:focus {
+            color: #333;
+            border-color: #888888;
+            outline: 0;
+        }
+        input[type="submit"].button-primary:focus, input[type="reset"].button-primary:focus, input[type="button"].button-primary:focus {
+            color: #fff;
+            background-color: #1eaedb;
+            border-color: #1eaedb;
+        }
+        input[type="email"], input[type="number"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"] {
+            height: 38px;
+            padding: 6px 10px;
+            background-color: #fff;
+            border: 1px solid #d1d1d1;
+            border-radius: 4px;
+            box-shadow: none;
+            box-sizing: border-box;
+        }
+        li {
+            margin-bottom: 1rem;
+            list-style-type: none;
+        }
+        button,
+        .button {
+            margin-bottom: 1rem;
+        }
+        input,
+        textarea,
+        select,
+        fieldset {
+            margin-bottom: 1.5rem;
+        }
+        body {
+            color: #FFFAFF;
+        }
+        .headline {
+            text-align: center;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            font-weight: 700;
+        }
+        .row {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        .weather-info {
+            text-align: center;
+        }
+        .weather-info-text {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 2.3em;
+        }
+        .search-weather {
+            background-color: rgb(255 255 255 / 30%);
+            border: 1px solid #fff;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            color: #333;
+            text-align: left;
+            margin: 15px auto 0;
+            padding: 5px 15px;
+            bottom: 0;
+        }
+        .search-weather h3 {
+            color: #003B2B;
+            font-weight: 700;
+        }
+        input[type="search"] {
+            width: 80%;
+        }
+        button {
+            background-color: #003B2B;
+            color: #FFFAFF;
+        }
+        button:hover {
+            color: #B0CF00;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 24rem;
+            color: white;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="container">
+        <div class="app twelve columns">
+            <h1 class="headline">Weather Forecast <span class="location">{{ city }}</span></h1>
+            <br><br><br><br><br><br>
+            {% if error %}
+            <div class="row">
+                <div class="eight columns offset-by-two">
+                    <div class="alert alert-danger">
+                        <center>
+                            <h3>{{ error }}</h3>
+                        </center>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="row">
+                <div class="search-weather eight columns offset-by-two">
+                    <h3>Find a Forecast</h3>
+                    <form id="my-form" method="post" class="form-inline">
+                        {% csrf_token %}
+                        <input type="search" name="city" placeholder="Enter the city" class="find-forcast">
+                        <button type="submit" class="btn-search">Search</button>
+                    </form>
+                </div>
+            </div>
+            <br><br>
+        </div>
+    </div>
+</div>
+<div class="copyright">
+    <p>&copy; Copyright <span id="year"></span> by UdayKallam</p>
+</div>
+
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
